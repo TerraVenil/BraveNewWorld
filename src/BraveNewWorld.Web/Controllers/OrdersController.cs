@@ -68,22 +68,19 @@ namespace BraveNewWorld.Web.Controllers
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // Create the Command and Parameter objects.
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataAdapter adapter = new SqlDataAdapter(queryString, connection))
                 {
-                    var orders = reader.Select(
+                    var ordersDataSet = new DataSet();
+                    adapter.Fill(ordersDataSet, "Orders");
+
+                    var orders = ordersDataSet.Tables["Orders"].AsEnumerable().Select(
                         x => new Order
                              {
-                                 OrderID = int.Parse(x["OrderID"].ToString()),
-                                 OrderDate = DateTime.Parse(x["OrderDate"].ToString()),
-                                 ShipName = x["ShipName"].ToString(),
-                                 Customer = new Customer { CompanyName = x["CompanyName"].ToString() }
+                                 OrderID = x.Field<int>("OrderID"),
+                                 OrderDate = x.Field<DateTime>("OrderDate"),
+                                 ShipName = x.Field<string>("ShipName"),
+                                 Customer = new Customer { CompanyName = x.Field<string>("CompanyName") }
                              }).ToList();
-
-                    reader.Close();
 
                     return View(orders);
                 }
