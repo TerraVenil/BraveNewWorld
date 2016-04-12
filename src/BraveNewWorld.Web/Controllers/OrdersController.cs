@@ -68,21 +68,37 @@ namespace BraveNewWorld.Web.Controllers
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter(queryString, connection))
+                connection.Open();
+
+                using (SqlCommand sqlCommand = connection.CreateCommand())
                 {
-                    var ordersDataSet = new DataSet();
-                    adapter.Fill(ordersDataSet, "Orders");
+                    using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
+                    {
+                        sqlCommand.Connection = connection;
+                        sqlCommand.Transaction = transaction;
+                        sqlCommand.CommandText = queryString;
 
-                    var orders = ordersDataSet.Tables["Orders"].AsEnumerable().Select(
-                        x => new Order
-                             {
-                                 OrderID = x.Field<int>("OrderID"),
-                                 OrderDate = x.Field<DateTime>("OrderDate"),
-                                 ShipName = x.Field<string>("ShipName"),
-                                 Customer = new Customer { CompanyName = x.Field<string>("CompanyName") }
-                             }).ToList();
+                        using (SqlDataAdapter adapter = new SqlDataAdapter())
+                        {
+                            adapter.SelectCommand = sqlCommand;
 
-                    return View(orders);
+                            var ordersDataSet = new DataSet();
+                            adapter.Fill(ordersDataSet, "Orders");
+
+                            var orders = ordersDataSet.Tables["Orders"].AsEnumerable().Select(
+                                x => new Order
+                                     {
+                                         OrderID = x.Field<int>("OrderID"),
+                                         OrderDate = x.Field<DateTime>("OrderDate"),
+                                         ShipName = x.Field<string>("ShipName"),
+                                         Customer = new Customer { CompanyName = x.Field<string>("CompanyName") }
+                                     }).ToList();
+
+                            transaction.Commit();
+
+                            return View(orders);
+                        }
+                    }
                 }
             }
         }
