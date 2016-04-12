@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BraveNewWorld.Web", "src\BraveNewWorld.Web.csproj", "{EA5D769E-C944-41D2-A844-113869B7C897}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BraveNewWorld.Web", "src\BraveNewWorld.Web\BraveNewWorld.Web.csproj", "{EA5D769E-C944-41D2-A844-113869B7C897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BraveNewWorld.Dal", "src\BraveNewWorld.Dal\BraveNewWorld.Dal.csproj", "{0D1FD93B-DCE6-4730-B6C7-BC82BD50AA8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EA5D769E-C944-41D2-A844-113869B7C897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA5D769E-C944-41D2-A844-113869B7C897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA5D769E-C944-41D2-A844-113869B7C897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1FD93B-DCE6-4730-B6C7-BC82BD50AA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1FD93B-DCE6-4730-B6C7-BC82BD50AA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1FD93B-DCE6-4730-B6C7-BC82BD50AA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1FD93B-DCE6-4730-B6C7-BC82BD50AA8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
