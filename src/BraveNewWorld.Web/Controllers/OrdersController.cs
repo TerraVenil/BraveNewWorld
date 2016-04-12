@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using BraveNewWorld.Dal;
 
@@ -17,8 +16,78 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee);
-            return View(orders.ToList());
+            var connectionString = db.Database.Connection.ConnectionString;
+
+            var queryString = @"SELECT 
+    [Extent1].[OrderID] AS [OrderID], 
+    [Extent1].[CustomerID] AS [CustomerID], 
+    [Extent1].[EmployeeID] AS [EmployeeID], 
+    [Extent1].[OrderDate] AS [OrderDate], 
+    [Extent1].[RequiredDate] AS [RequiredDate], 
+    [Extent1].[ShippedDate] AS [ShippedDate], 
+    [Extent1].[ShipVia] AS [ShipVia], 
+    [Extent1].[Freight] AS [Freight], 
+    [Extent1].[ShipName] AS [ShipName], 
+    [Extent1].[ShipAddress] AS [ShipAddress], 
+    [Extent1].[ShipCity] AS [ShipCity], 
+    [Extent1].[ShipRegion] AS [ShipRegion], 
+    [Extent1].[ShipPostalCode] AS [ShipPostalCode], 
+    [Extent1].[ShipCountry] AS [ShipCountry], 
+    [Extent2].[CustomerID] AS [CustomerID1], 
+    [Extent2].[CompanyName] AS [CompanyName], 
+    [Extent2].[ContactName] AS [ContactName], 
+    [Extent2].[ContactTitle] AS [ContactTitle], 
+    [Extent2].[Address] AS [Address], 
+    [Extent2].[City] AS [City], 
+    [Extent2].[Region] AS [Region], 
+    [Extent2].[PostalCode] AS [PostalCode], 
+    [Extent2].[Country] AS [Country], 
+    [Extent2].[Phone] AS [Phone], 
+    [Extent2].[Fax] AS [Fax], 
+    [Extent3].[EmployeeID] AS [EmployeeID1], 
+    [Extent3].[LastName] AS [LastName], 
+    [Extent3].[FirstName] AS [FirstName], 
+    [Extent3].[Title] AS [Title], 
+    [Extent3].[TitleOfCourtesy] AS [TitleOfCourtesy], 
+    [Extent3].[BirthDate] AS [BirthDate], 
+    [Extent3].[HireDate] AS [HireDate], 
+    [Extent3].[Address] AS [Address1], 
+    [Extent3].[City] AS [City1], 
+    [Extent3].[Region] AS [Region1], 
+    [Extent3].[PostalCode] AS [PostalCode1], 
+    [Extent3].[Country] AS [Country1], 
+    [Extent3].[HomePhone] AS [HomePhone], 
+    [Extent3].[Extension] AS [Extension], 
+    [Extent3].[Photo] AS [Photo], 
+    [Extent3].[Notes] AS [Notes], 
+    [Extent3].[ReportsTo] AS [ReportsTo], 
+    [Extent3].[PhotoPath] AS [PhotoPath]
+    FROM  [dbo].[Orders] AS [Extent1]
+    LEFT OUTER JOIN [dbo].[Customers] AS [Extent2] ON [Extent1].[CustomerID] = [Extent2].[CustomerID]
+    LEFT OUTER JOIN [dbo].[Employees] AS [Extent3] ON [Extent1].[EmployeeID] = [Extent3].[EmployeeID]";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // Create the Command and Parameter objects.
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    var orders = reader.Select(
+                        x => new Order
+                             {
+                                 OrderID = int.Parse(x["OrderID"].ToString()),
+                                 OrderDate = DateTime.Parse(x["OrderDate"].ToString()),
+                                 ShipName = x["ShipName"].ToString(),
+                                 Customer = new Customer { CompanyName = x["CompanyName"].ToString() }
+                             }).ToList();
+
+                    reader.Close();
+
+                    return View(orders);
+                }
+            }
         }
 
         // GET: Orders/Details/5
