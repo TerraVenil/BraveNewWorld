@@ -17,7 +17,7 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee);
+            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee).AsNoTracking();
             return View(orders.ToList());
         }
 
@@ -93,8 +93,6 @@ namespace BraveNewWorld.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            db.Entry(order).Reference(x => x.Customer).Query().Include(x => x.Address).Load();
 
             ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "CompanyName", order.CustomerID);
             ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "LastName", order.EmployeeID);
