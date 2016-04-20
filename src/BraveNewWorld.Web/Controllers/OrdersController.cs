@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BraveNewWorld.Dal;
+using EntityFramework.Extensions;
 
 namespace BraveNewWorld.Web.Controllers
 {
@@ -17,7 +18,9 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee);
+            var orders = db.Orders.Include(o => o.Order_Details);
+            var customers = db.Products.Include(x => x.Category).Future();
+
             return View(orders.ToList());
         }
 
