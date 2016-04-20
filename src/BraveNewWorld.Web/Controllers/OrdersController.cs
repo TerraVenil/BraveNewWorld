@@ -12,7 +12,7 @@ namespace BraveNewWorld.Web.Controllers
 {
     public class OrdersController : Controller
     {
-        private NorthwindEntities db = new NorthwindEntities();
+        private readonly NorthwindEntitiesDataContext db = new NorthwindEntitiesDataContext();
 
         // GET: Orders
         public ActionResult Index()
@@ -28,7 +28,7 @@ namespace BraveNewWorld.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.FirstOrDefault(x => x.OrderID == id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -53,8 +53,8 @@ namespace BraveNewWorld.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Orders.Add(order);
-                db.SaveChanges();
+                db.Orders.InsertOnSubmit(order);
+                db.SubmitChanges();
                 return RedirectToAction("Index");
             }
 
@@ -70,7 +70,7 @@ namespace BraveNewWorld.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.FirstOrDefault(x => x.OrderID == id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -89,8 +89,8 @@ namespace BraveNewWorld.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Orders.Attach(order);
+                db.SubmitChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "CompanyName", order.CustomerID);
@@ -105,7 +105,7 @@ namespace BraveNewWorld.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = db.Orders.FirstOrDefault(x => x.OrderID == id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -118,9 +118,9 @@ namespace BraveNewWorld.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
+            Order order = db.Orders.First(x => x.OrderID == id);
+            db.Orders.DeleteOnSubmit(order);
+            db.SubmitChanges();
             return RedirectToAction("Index");
         }
 

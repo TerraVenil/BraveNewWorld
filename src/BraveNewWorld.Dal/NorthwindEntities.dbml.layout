@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.625, 11" name="NorthwindEntities">
+  <DataContextMoniker Name="/NorthwindEntitiesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f323892c-c286-4d62-b781-ca98cc08642e" absoluteBounds="3.5, 1.875, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/NorthwindEntitiesDataContext/Order_Detail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6580c4eb-02bb-4336-acbf-f50bbc77b86b" absoluteBounds="3.515, 2.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cf3e7f26-e7a7-41f9-b3ce-158682bb6b8c" absoluteBounds="0.75, 1, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/NorthwindEntitiesDataContext/Order" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7974a65c-3da2-48e3-9edb-8381cc15d80f" absoluteBounds="0.765, 1.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.76044840494792); (3.5 : 2.76044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/NorthwindEntitiesDataContext/Order/Order_Order_Detail" />
+      <nodes>
+        <classShapeMoniker Id="cf3e7f26-e7a7-41f9-b3ce-158682bb6b8c" />
+        <classShapeMoniker Id="f323892c-c286-4d62-b781-ca98cc08642e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="cd3c8760-528a-4907-b970-295115632d3d" absoluteBounds="9.375, 2.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/NorthwindEntitiesDataContext/Customer" />
+      <nestedChildShapes>
+        <elementListCompartment Id="971c38e4-bb9c-4f1b-9cea-439e23ec48eb" absoluteBounds="9.39, 2.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.53125 : 2.25); (10.53125 : 1.34375); (2.75 : 1.34375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/NorthwindEntitiesDataContext/Customer/Customer_Order" />
+      <nodes>
+        <classShapeMoniker Id="cd3c8760-528a-4907-b970-295115632d3d" />
+        <classShapeMoniker Id="cf3e7f26-e7a7-41f9-b3ce-158682bb6b8c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="21e5aec8-121a-47b7-8b4c-6c27ee649f76" absoluteBounds="3.125, 6, 2, 4.2708154296875">
+      <DataClassMoniker Name="/NorthwindEntitiesDataContext/Employee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="552e3d22-9e91-4ac1-98c1-a3f6c1ffab5b" absoluteBounds="3.1399999999999997, 6.46, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.28125 : 6); (3.28125 : 4.10500325520833); (2.75 : 4.10500325520833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/NorthwindEntitiesDataContext/Employee/Employee_Order" />
+      <nodes>
+        <classShapeMoniker Id="21e5aec8-121a-47b7-8b4c-6c27ee649f76" />
+        <classShapeMoniker Id="cf3e7f26-e7a7-41f9-b3ce-158682bb6b8c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.83423076923077 : 10.2708154296875); (3.83423076923077 : 10.5208154296875); (4.42961538461539 : 10.5208154296875); (4.42961538461539 : 10.2708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/NorthwindEntitiesDataContext/Employee/Employee_Employee" />
+      <nodes>
+        <classShapeMoniker Id="21e5aec8-121a-47b7-8b4c-6c27ee649f76" />
+        <classShapeMoniker Id="21e5aec8-121a-47b7-8b4c-6c27ee649f76" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
