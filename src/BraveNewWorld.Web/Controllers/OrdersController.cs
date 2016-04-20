@@ -17,7 +17,7 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            db.Configuration.AutoDetectChangesEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
 
             var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee);
             return View(orders.ToList());
