@@ -17,7 +17,7 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee).AsNoTracking();
+            var orders = db.Orders.Include(o => o.Customer).Include(o => o.Employee);
             return View(orders.ToList());
         }
 
@@ -89,6 +89,8 @@ namespace BraveNewWorld.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                db.Entry(order).Property(x => x.CustomerID).IsModified = false;
+
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
