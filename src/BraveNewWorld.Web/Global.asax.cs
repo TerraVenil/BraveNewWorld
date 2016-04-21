@@ -11,6 +11,7 @@ namespace BraveNewWorld.Web
     {
         protected void Application_Start()
         {
+            MappingRegistrations.RegisterMappings();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

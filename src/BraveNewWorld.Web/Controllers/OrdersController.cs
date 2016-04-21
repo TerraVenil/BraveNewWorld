@@ -18,12 +18,7 @@ namespace BraveNewWorld.Web.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var updateRowCount = db.Orders
-                .Where(u => u.ShipName == "Vins et alcools Chevalier").
-                Update(u => new Order { ShipName = "Vons et alcools Chevalier" });
-
             var orders = db.Orders;
-
             return View(orders.ToList());
         }
 
